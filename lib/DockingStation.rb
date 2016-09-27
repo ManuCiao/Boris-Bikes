@@ -1,5 +1,6 @@
 class DockingStation
   def release_bike
+    good_bike = Bike.new
   end
 end
 
