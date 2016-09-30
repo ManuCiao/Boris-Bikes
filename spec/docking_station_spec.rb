@@ -1,4 +1,5 @@
 require 'docking_station'
+require 'bike'
 
 describe DockingStation do
 	subject(:docking_station) {described_class.new}
@@ -26,8 +27,6 @@ describe DockingStation do
 		expect{ subject.release_bike }.to raise_error "NO BIKES!"
 	end
 
-
-
 	it "return an error when docking stations are 20" do
 		stub_const("DEFAULT_CAPACITY", 20)
 		DEFAULT_CAPACITY.times { subject.dock Bike.new }
@@ -38,5 +37,6 @@ describe DockingStation do
 	 	docking_station = DockingStation.new(15)
 		expect(docking_station.capacity).to eq 15
 	end
+
 
 end
