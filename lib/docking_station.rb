@@ -12,8 +12,7 @@ class DockingStation
 
 	def release_bike
 		 raise "NO BIKES!" if empty?
-
-		 #raise "This bike is broken!" if bikes.broken_bike == true
+		 raise "These bikes are broken!" if no_working_bikes?
 		 self.bikes.pop
 
 	end
@@ -29,6 +28,10 @@ class DockingStation
 
 def empty?
 	self.bikes.count < 1
+end
+
+def no_working_bikes?
+	!bikes.last.working?
 end
 
 private :full?, :empty?
