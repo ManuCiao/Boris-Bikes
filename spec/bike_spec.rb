@@ -3,9 +3,9 @@ require 'bike'
 describe Bike do
 	it {is_expected.to respond_to :working?}
 
-	it "should report a broken bike" do
-		bike = Bike.new
-		expect(bike.report_broken_bike?).to be true
+	it "should report bike is broken" do
+		subject.report_broken_bike
+		expect(subject).to be_broken
 	end
 
 
