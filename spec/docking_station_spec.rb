@@ -3,13 +3,16 @@ require 'bike'
 
 
 describe DockingStation do
+
 	subject(:docking_station) {described_class.new}
+	let(:bike) { double :bike, broken?:false, working?:true }
+	let(:broken_bike) { double :broken_bike, working?:false}
 
 	it { is_expected.to respond_to :release_bike }
 
 	it "gets a bike and checks if it works" do
 		#bike = Bike.new
-		subject.dock double(:bike)
+		subject.dock(bike)
     subject.release_bike
 		expect(bike).to be_working
 	end
@@ -21,8 +24,7 @@ describe DockingStation do
 	describe '#release_bike' do
 
 		it "returns docked bikes" do
-			#bike = Bike.new
-			subject.dock double(:bike)
+			subject.dock(bike)
 			expect(subject.bikes).to eq [bike]
 		end
 
@@ -31,16 +33,12 @@ describe DockingStation do
 		end
 
 		it "doesn't release broken bikes" do
-			#bike = Bike.new
-			allow(double(:bike)).to receive(:working?).and_return(false)
-			subject.dock double(:bike)
+			subject.dock broken_bike
 			expect{ subject.release_bike }.to raise_error "These bikes are broken!"
 		end
 
 		it "return release working bikes" do
-			#bike = Bike.new
-			allow(double(:bike)).to receive(:working?).and_return(true)
-			subject.dock double(:bike)
+			subject.dock(bike)
 			working_bike = subject.release_bike
 			expect(working_bike).to be_working
 		end
@@ -51,8 +49,8 @@ describe DockingStation do
 
 		it "return an error when docking stations are 20" do
 			stub_const("DEFAULT_CAPACITY", 20)
-			DEFAULT_CAPACITY.times { subject.dock Bike.new }
-			expect { subject.dock Bike.new }.to raise_error "Docking Stations are full"
+			DEFAULT_CAPACITY.times { subject.dock(bike)}
+			expect { subject.dock(bike)}.to raise_error "Docking Stations are full"
 		end
 
 		it "returns capacity to be equal 15" do
