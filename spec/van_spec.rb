@@ -1,7 +1,9 @@
 require 'van'
 
-
 describe Van do
+
+it_behaves_like BikeContainer
+
   let (:broken_bike) { double :broken_bike, working?:false }
   let (:docking_stations) { double :docking_stations }
   let (:working_bike) { double :working_bike, working?:true }

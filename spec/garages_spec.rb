@@ -1,24 +1,12 @@
 require 'garages'
 
-describe Garages do
+describe Garage do
+  it_behaves_like BikeContainer
 
-  let (:broken_bike) { double :broken_bike, working?:false }
-  let (:van) { double :van}
-
-  before(:each) do
-    allow(van).to receive(:collected).and_return([])
-    allow(van).to receive(:broken_bikes).and_return([broken_bike])
+  it 'fixes broken bikes' do
+    bike = double :bike, fix: nil, broken?: false
+    subject.add_bike bike
+    subject.fix_bikes
+    expect(bike).not_to be_broken
   end
-
-    describe "#collected" do
-
-      it "returns broken bikes collected from docking stations" do
-        subject.collected(van)
-        expect(subject.fixed_bikes).to eq [broken_bike]
-    	end
-
-      it { is_expected.to respond_to(:collected).with(1).arguments }
-
-    end
-
-  end
+end
